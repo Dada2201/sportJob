@@ -18,7 +18,7 @@ public class GameDAO extends DAO<Game> {
                 ////////////////////////////////////////////////////////////////////////////////////////////////////////
                 PreparedStatement prepare = this    .connect
                         .prepareStatement(
-                                "INSERT INTO GAME (id,homeTeam,awayTeam,date,league,hour,oddHome,oddTie,oddAway) SELECT (SELECT counter from GameIDCounter),?,?,?,?,?,?,?,? FROM DUAL WHERE NOT EXISTS (SELECT * FROM GAME WHERE homeTeam=? AND awayTeam=? LIMIT 1) ");
+                                "INSERT INTO GAME (id,homeTeam,awayTeam,date,league,hour,oddHome,oddTie,oddAway) SELECT (SELECT counter from GameIDCounter),?,?,?,?,?,?,?,? FROM DUAL WHERE NOT EXISTS (SELECT * FROM GAME WHERE homeTeam=? AND awayTeam=? ) ");
                 prepare.setString(1, obj.getHomeTeam());
                 prepare.setString(2, obj.getAwayTeam());
                 prepare.setString(3, obj.getDate());

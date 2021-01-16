@@ -24,7 +24,8 @@ public class Scrap {
 
     public static void main (String[] args) throws ParseException {
         // Declaration and instantiation of driver and URL /////////////////////////////////////////////////////////////
-        System.setProperty("webdriver.gecko.driver","../drivers/geckoWin64.exe");
+
+        System.setProperty("webdriver.gecko.driver", "drivers/geckoWin64.exe");
         FirefoxOptions options = new FirefoxOptions();
         options.setHeadless(true);  // <-- headless set here
         WebDriver driver = new FirefoxDriver(options);
@@ -47,15 +48,16 @@ public class Scrap {
             String gameDay = dayGamesList.findElement(By.className("bettingbox-date")).getText(); // Get date of the game
             List<WebElement> gamesOnThisDay = dayGamesList.findElements(By.className("calendar-event")); // List of all games for a single day
             for(WebElement game : gamesOnThisDay){
+                System.out.println(game.getAttribute("innerHTML"));
                 Game g = new Game(
                         fetchHomeTeam(game.findElement(By.className("cell-event")).getText()),
                         fetchAwayTeam(game.findElement(By.className("cell-event")).getText()),
                         convertStringDate(gameDay),
                         game.findElement(By.className("competition")).getText(),
                         game.findElement(By.className("datetime")).getText(),
-                        Double.parseDouble(game.findElements(By.className("odd-price")).get(0).getText()),
                         Double.parseDouble(game.findElements(By.className("odd-price")).get(1).getText()),
-                        Double.parseDouble(game.findElements(By.className("odd-price")).get(2).getText())
+                        Double.parseDouble(game.findElements(By.className("odd-price")).get(3).getText()),
+                        Double.parseDouble(game.findElements(By.className("odd-price")).get(5).getText())
                         );
                 GameDAO gDAO = new GameDAO();
                 gDAO.insert(g);
